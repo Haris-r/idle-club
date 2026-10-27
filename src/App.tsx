@@ -506,7 +506,9 @@ function Admin() {
     }
     const { error: err } = await supabase.auth.signInWithOtp({
       email,
-      emailRedirectTo: window.location.origin + "/admin",
+      options: {
+        emailRedirectTo: window.location.origin + "/admin",
+      },
     });
     if (err) setError(err.message);
     else setSent(true);
