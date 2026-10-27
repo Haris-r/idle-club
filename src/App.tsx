@@ -240,6 +240,20 @@ function Shop() {
                   Tell us what you'd like to wear. This helps us plan the first
                   production run.
                 </p>
+                {/* Live mobile hoodie preview */}
+                <div className="mobile-product-preview">
+                  <img
+                    src={colours.find((c) => c.name === colour)?.image}
+                    alt={`${colour} Idle Club hoodie`}
+                    className="mobile-preview-image"
+                  />
+
+                  <div className="mobile-preview-details">
+                    <span>YOUR SELECTED DESIGN</span>
+                    <strong>{colour}</strong>
+                    <p>100% Cotton · Premium Heavyweight</p>
+                  </div>
+                </div>
                 <div className="field-label">
                   COLOUR <strong>{colour}</strong>
                 </div>

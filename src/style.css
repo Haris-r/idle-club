@@ -661,3 +661,58 @@ th {
   padding: 30px 35px;
   overflow: hidden;
 }
+/* Hide the extra preview on desktop */
+.mobile-product-preview {
+  display: none;
+}
+
+/* Display live hoodie preview on mobile */
+@media (max-width: 850px) {
+  .mobile-product-preview {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #e9e6df;
+    padding: 14px;
+    margin: 22px 0;
+    border-radius: 8px;
+  }
+
+  .mobile-preview-image {
+    width: 125px;
+    height: 135px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .mobile-preview-details {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .mobile-preview-details span {
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: #777;
+  }
+
+  .mobile-preview-details strong {
+    font-size: 17px;
+    color: #171717;
+  }
+
+  .mobile-preview-details p {
+    font-size: 11px;
+    color: #777;
+    line-height: 1.5;
+    margin: 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .mobile-preview-image {
+    width: 100px;
+    height: 115px;
+  }
+}
