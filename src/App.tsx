@@ -401,7 +401,7 @@ function Shop() {
           </a>
 
           <a
-            href="https://www.snapchat.com/add/lifeofalif"
+            href="https://www.snapchat.com/add/alifeating"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Snapchat"
