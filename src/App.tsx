@@ -397,7 +397,7 @@ function Shop() {
 
         <div className="footer-socials">
           <a
-            href="https://www.instagram.com/lifeofalif"
+            href="https://www.instagram.com/lifeofalif_"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
