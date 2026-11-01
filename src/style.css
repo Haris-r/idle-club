@@ -716,3 +716,164 @@ th {
     height: 115px;
   }
 }
+
+@media (max-width: 480px) {
+  .colour-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .swatch {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+  }
+}
+
+.reward-offer {
+  margin-top: 26px;
+  padding: 24px;
+  background: #eeeae1;
+  border: 1px solid #ded7ca;
+}
+
+.reward-badge {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 1.3px;
+  font-weight: 700;
+  color: #746445;
+}
+
+.reward-offer h3 {
+  font-size: 27px;
+  font-weight: 700;
+  margin: 12px 0;
+}
+
+.reward-offer p {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.reward-savings {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #d6cec0;
+  padding-top: 16px;
+  gap: 12px;
+}
+
+.reward-savings span {
+  font-size: 12px;
+  color: #555;
+}
+
+.reward-savings strong {
+  font-size: 28px;
+  color: #171717;
+}
+/* IDLE CLUB EARLY ACCESS */
+
+.idle-offer {
+  margin-top: 34px;
+  padding: 28px;
+  background: #eeeae1;
+  border: 1px solid #ded7ca;
+}
+
+.idle-offer-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #746445;
+  margin: 0 0 14px;
+}
+
+.idle-offer h3 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(21px, 2.2vw, 29px);
+  line-height: 1.2;
+  letter-spacing: -0.8px;
+  margin: 0 0 22px;
+}
+
+.idle-offer-prices {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.idle-offer-prices strong {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(40px, 5vw, 52px);
+  font-weight: 700;
+  letter-spacing: -2px;
+  color: #171717;
+}
+
+.idle-retail-price {
+  font-size: 21px;
+  font-weight: 400;
+  color: #8b877f;
+  text-decoration: line-through;
+}
+
+.idle-savings {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: #6f6045;
+  margin: 8px 0 20px;
+}
+
+.idle-offer-description {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #55514c;
+}
+
+.idle-no-payment {
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 18px;
+}
+
+.idle-offer-note,
+.idle-price-disclaimer {
+  font-size: 12px;
+  line-height: 1.7;
+  color: #77716a;
+}
+
+.idle-price-disclaimer {
+  margin-top: 16px;
+  font-size: 11px;
+}
+
+.idle-signup-note {
+  font-size: 11px;
+  color: #777;
+  text-align: center;
+  line-height: 1.6;
+  margin-top: 14px;
+}
+
+@media (max-width: 480px) {
+  .idle-offer {
+    padding: 20px;
+  }
+
+  .idle-offer-prices strong {
+    font-size: 42px;
+  }
+
+  .idle-retail-price {
+    font-size: 18px;
+  }
+}

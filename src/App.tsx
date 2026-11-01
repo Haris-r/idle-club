@@ -19,6 +19,7 @@ import grayImg from "./assets/gray-idle-club.png";
 import blackImg from "./assets/black-idle-club.png";
 import purpleImg from "./assets/purple-idle-club.png";
 import charcoalImg from "./assets/washed-idle-club.png";
+import greenImg from "./assets/green-idle-club.png";
 import type { Session } from "@supabase/supabase-js";
 
 const colours = [
@@ -26,10 +27,15 @@ const colours = [
   { name: "Black", hex: "#111111", image: blackImg },
   { name: "Vintage Purple", hex: "#8b667f", image: purpleImg },
   { name: "Washed Charcoal", hex: "#3a3a3a", image: charcoalImg },
+  { name: "Forest Green", hex: "#12382d", image: greenImg },
 ];
 const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
-const cost = 49.99;
-const retailPrice = 74.99;
+const retailPrice = 79.99;
+const discountPercent = 30;
+const earlyAccessPrice = Number(
+  (retailPrice * (1 - discountPercent / 100)).toFixed(2),
+);
+const savings = Number((retailPrice - earlyAccessPrice).toFixed(2));
 type Reservation = {
   id: string;
   email: string;
@@ -172,40 +178,59 @@ function Shop() {
         <section className="product" id="reserve">
           <div className="product-intro">
             <p className="overline">001 — THE ESSENTIAL</p>
+
             <h2>The Essential Hoodie</h2>
+
             <p>
               Our debut piece. Designed for effortless everyday wear and a
               clean, timeless silhouette.
             </p>
-            <div className="price">
-              <span className="launch-label">EXCLUSIVE FIRST-DROP PRICE</span>
 
-              <div className="price-row">
-                <strong>£{cost.toFixed(2)}</strong>
+            <div className="idle-offer">
+              <p className="idle-offer-eyebrow">EXCLUSIVE EARLY-ACCESS OFFER</p>
 
-                <span className="original-price">
+              <h3>JOIN THE WAITLIST & UNLOCK 30% OFF</h3>
+
+              <div className="idle-offer-prices">
+                <strong>£{earlyAccessPrice.toFixed(2)}</strong>
+
+                <span className="idle-retail-price">
                   £{retailPrice.toFixed(2)}
                 </span>
               </div>
 
-              <p className="price-message">
-                A special price for our earliest supporters.
+              <p className="idle-savings">
+                SAVE £{savings.toFixed(2)} WITH EARLY ACCESS
               </p>
 
-              <p className="price-note">
-                Planned regular price: £74.99. No payment required to register
-                interest.
+              <p className="idle-offer-description">
+                Join the IDLE CLUB early-access list and unlock an exclusive 30%
+                discount when our first collection launches.
+              </p>
+
+              <p className="idle-no-payment">No payment required today.</p>
+
+              <p className="idle-offer-note">
+                Your exclusive offer will be emailed to you when IDLE CLUB
+                launches.
+              </p>
+
+              <p className="idle-price-disclaimer">
+                £79.99 planned regular price. £55.99 early-access launch offer.
               </p>
             </div>
+
             <div className="details-list">
               <div>
-                FIT <strong>Relaxed / oversized</strong>
+                FIT <strong>Relaxed / Oversized</strong>
               </div>
+
               <div>
-                FABRIC <strong>Heavyweight cotton blend (planned)</strong>
+                FABRIC <strong>Heavyweight 100% Cotton</strong>
               </div>
+
               <div>
-                RELEASE <strong>To be confirmed</strong>
+                RELEASE <strong>Coming Soon</strong>
               </div>
             </div>
           </div>
@@ -215,11 +240,19 @@ function Shop() {
                 <div className="success-icon">
                   <Check size={26} />
                 </div>
-                <h3>You're on the list.</h3>
+                <h3>You're on the list! 🎉</h3>
+
                 <p>
-                  Thanks for registering your interest in {quantity} × {colour},
-                  size {size}. Nothing has been charged or ordered.
+                  Your exclusive 30% early-access offer will be emailed to you
+                  when IDLE CLUB launches.
                 </p>
+
+                <p>
+                  Your selected hoodie: {colour}, size {size}, quantity{" "}
+                  {quantity}.
+                </p>
+
+                <p>No payment has been taken.</p>
                 <button
                   className="outline-button"
                   onClick={() => {
@@ -235,10 +268,12 @@ function Shop() {
             ) : (
               <form onSubmit={submit}>
                 <p className="overline">YOUR PICK</p>
-                <h3>Register your interest</h3>
+                <h3>Unlock Your 30% Discount</h3>
+
                 <p className="form-description">
-                  Tell us what you'd like to wear. This helps us plan the first
-                  production run.
+                  Join the IDLE CLUB early-access list and get 30% off our first
+                  collection when it launches. Choose your hoodie and enter your
+                  email below.
                 </p>
                 {/* Live mobile hoodie preview */}
                 <div className="mobile-product-preview">
@@ -332,7 +367,7 @@ function Shop() {
                   type="email"
                   required
                   maxLength={254}
-                  placeholder="you@example.com"
+                  placeholder="Enter your email address"
                   autoComplete="email"
                 />
                 <div className="hidden-field" aria-hidden="true">
@@ -361,9 +396,13 @@ function Shop() {
                   type="submit"
                   disabled={busy}
                 >
-                  {busy ? "SUBMITTING…" : "REGISTER MY INTEREST"}
+                  {busy ? "SUBMITTING…" : "UNLOCK MY 30% OFF"}
                   <ArrowRight size={18} />
                 </button>
+                <p className="idle-signup-note">
+                  Free to join. No payment required. Limited first-drop
+                  availability.
+                </p>
                 {error && (
                   <p role="alert" className="form-error">
                     {error}
@@ -521,7 +560,7 @@ function Admin() {
     const { error: err } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: window.location.origin + "/admin",
+        emailRedirectTo: `${window.location.origin}/admin`,
       },
     });
     if (err) setError(err.message);
