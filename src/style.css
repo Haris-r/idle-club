@@ -877,3 +877,104 @@ th {
     font-size: 18px;
   }
 }
+/* IDLE CLUB: Swipeable hoodie carousel */
+.hoodie-carousel {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 34px 38px;
+  touch-action: pan-y;
+}
+
+.hoodie-carousel .hoodie-photo {
+  display: block;
+  width: 100%;
+  max-width: 530px;
+  height: auto;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.hoodie-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.86);
+  color: #171717;
+  cursor: pointer;
+}
+.hoodie-arrow-left {
+  left: 0;
+}
+.hoodie-arrow-right {
+  right: 0;
+}
+.hoodie-arrow:hover {
+  background: white;
+}
+.hoodie-arrow:focus-visible,
+.hoodie-dot:focus-visible {
+  outline: 2px solid #171717;
+  outline-offset: 3px;
+}
+
+.hoodie-dots {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.hoodie-dot {
+  display: block;
+  padding: 0;
+  width: 9px;
+  height: 9px;
+  border: 0;
+  border-radius: 20px;
+  background: #aaa69d;
+  cursor: pointer;
+}
+.hoodie-dot.active {
+  width: 24px;
+  background: #171717;
+}
+
+@media (max-width: 850px) {
+  .hoodie-carousel {
+    min-height: 330px;
+    padding: 10px 30px 38px;
+  }
+  .hoodie-carousel .hoodie-photo {
+    max-height: 420px;
+  }
+  .hoodie-arrow {
+    width: 36px;
+    height: 36px;
+  }
+}
+@media (max-width: 480px) {
+  .hoodie-carousel {
+    min-height: 285px;
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+  .hoodie-arrow {
+    width: 34px;
+    height: 34px;
+  }
+}

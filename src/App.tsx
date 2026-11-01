@@ -1,4 +1,11 @@
-import { useEffect, useMemo, useState, type FormEvent } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type FormEvent,
+  type TouchEvent,
+} from "react";
 import {
   ArrowRight,
   Check,
@@ -13,6 +20,8 @@ import {
   Plus,
   Shirt,
   TrendingUp,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { supabase } from "./supabase";
 import grayImg from "./assets/gray-idle-club.png";
@@ -72,8 +81,38 @@ function SiteHeader() {
     </header>
   );
 }
-function ProductArtwork({ colour }: { colour: string }) {
+function ProductArtwork({
+  colour,
+  onPrevious,
+  onNext,
+  onSelect,
+}: {
+  colour: string;
+  onPrevious: () => void;
+  onNext: () => void;
+  onSelect: (name: string) => void;
+}) {
   const item = colours.find((c) => c.name === colour) || colours[0];
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+
+  const handleTouchStart = (e: TouchEvent<HTMLDivElement>) => {
+    touchStart.current = {
+      x: e.touches[0].clientX,
+      y: e.touches[0].clientY,
+    };
+  };
+
+  const handleTouchEnd = (e: TouchEvent<HTMLDivElement>) => {
+    if (!touchStart.current) return;
+    const deltaX = e.changedTouches[0].clientX - touchStart.current.x;
+    const deltaY = e.changedTouches[0].clientY - touchStart.current.y;
+    touchStart.current = null;
+
+    // Don't switch designs on vertical scroll or accidental small movements.
+    if (Math.abs(deltaX) < 50 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
+    if (deltaX < 0) onNext();
+    else onPrevious();
+  };
 
   return (
     <div className="artwork">
@@ -82,11 +121,50 @@ function ProductArtwork({ colour }: { colour: string }) {
         <span>FIRST HOODIE DROP</span>
       </div>
 
-      <img
-        className="hoodie-photo"
-        src={item.image}
-        alt={`${item.name} Idle Club hoodie`}
-      />
+      <div
+        className="hoodie-carousel"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        <button
+          type="button"
+          className="hoodie-arrow hoodie-arrow-left"
+          onClick={onPrevious}
+          aria-label="Previous hoodie"
+        >
+          <ChevronLeft size={22} />
+        </button>
+
+        <img
+          className="hoodie-photo"
+          src={item.image}
+          alt={`${item.name} Idle Club hoodie`}
+          draggable={false}
+        />
+
+        <button
+          type="button"
+          className="hoodie-arrow hoodie-arrow-right"
+          onClick={onNext}
+          aria-label="Next hoodie"
+        >
+          <ChevronRight size={22} />
+        </button>
+
+        <div className="hoodie-dots" aria-label="Choose hoodie design">
+          {colours.map((c) => (
+            <button
+              key={c.name}
+              type="button"
+              className={`hoodie-dot${c.name === colour ? " active" : ""}`}
+              onClick={() => onSelect(c.name)}
+              aria-label={`Show ${c.name} hoodie`}
+              aria-pressed={c.name === colour}
+              title={c.name}
+            />
+          ))}
+        </div>
+      </div>
 
       <div className="artwork-footer">
         <span>PREMIUM STREETWEAR</span>
@@ -106,6 +184,14 @@ function Shop() {
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
+  const currentIndex = colours.findIndex((c) => c.name === colour);
+
+  const changeHoodie = (direction: number) => {
+    const nextIndex =
+      (currentIndex + direction + colours.length) % colours.length;
+
+    setColour(colours[nextIndex].name);
+  };
   const source = useMemo(
     () =>
       new URLSearchParams(window.location.search).get("source")?.slice(0, 60) ||
@@ -141,6 +227,7 @@ function Shop() {
     }
     setDone(true);
   }
+
   return (
     <>
       <SiteHeader />
@@ -173,7 +260,12 @@ function Shop() {
               No payment required. This is a non-binding expression of interest.
             </p>
           </div>
-          <ProductArtwork colour={colour} />
+          <ProductArtwork
+            colour={colour}
+            onPrevious={() => changeHoodie(-1)}
+            onNext={() => changeHoodie(1)}
+            onSelect={setColour}
+          />
         </section>
         <section className="product" id="reserve">
           <div className="product-intro">
